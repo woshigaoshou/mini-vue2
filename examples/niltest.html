@@ -3,27 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>mini-vue2</title>
 </head>
 <body>
-<script src="../dist/vue.js"></script>
-<script>
-  const vm = new Vue({
-    data () {
-      return {
-        a: 1,
-        b: {
-          c: 3
-        },
-        d: []
-      };
-    }
-  });
-  console.log(vm, vm.a);
-  console.log(vm, vm.b.c);
-  vm.b.c = 4;
-  vm.d.push({e: 5});
-  vm.d[0].e = 6;
-</script>
+  <div id="app">
+    <span>{{a}}</span>
+    <p>{{a}}</p>
+    <a href="#"><i>1123</i></a>
+  </div>
+  <script src="../dist/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data () {
+        return {
+          a: 1,
+          b: {
+            c: 3
+          },
+          d: []
+        };
+      }
+    });
+    // console.log(vm, vm.a);
+    // console.log(vm, vm.b.c);
+    // vm.b.c = 4;
+    // vm.d.push({e: 5});
+    // vm.d[0].e = 6;
+  </script>
 </body>
 </html>
