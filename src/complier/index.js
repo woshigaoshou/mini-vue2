@@ -18,7 +18,8 @@ function genProps (attrs) {
     }
     str += `${attr.name}:${JSON.stringify(attr.value)},`;
   }
-  return str.slice(0, -1);
+  // props用对象包裹
+  return `{${str.slice(0, -1)}}`;
 }
 
 function genChildren (children) {
@@ -33,6 +34,8 @@ function gen (node) {
     const { text } = node;
     // 纯文本
     if (!defaultTagRE.test(text)) {
+      console.log(1);
+      
       // _v 表示创建文本vNode
       return `_v(${JSON.stringify(text)})`;
     } else {
@@ -45,29 +48,32 @@ function gen (node) {
         if (index > lastIndex) {
           tokens.push(JSON.stringify(text.slice(lastIndex, index)));
         }
-        tokens.push(`_s${match[1].trim()}`);
+        tokens.push(`_s(${match[1].trim()})`);
         lastIndex = index + match[0].length;
       }
       // 最终匹配的位置不是length的位置，证明后面还有text文本
       if (lastIndex < text.length) {
         tokens.push(JSON.stringify(text.slice(lastIndex)));
       }
+      return `_v(${tokens.join('+')})`;
     }
   }
 }
 
 function generate (ast) {
   let children = genChildren(ast.children);
-  console.log(children);
-  
-  return `_c(${ast.tag},${ast.attrs.length ? genProps(ast.attrs) : undefined}
+
+  return `_c('${ast.tag}',${ast.attrs.length ? genProps(ast.attrs) : undefined}
     ${children.length ? `,${children}` : ''})`;
 }
 
 export function complieToFunctions (template) {
   let ast = parseHTML(template);
   console.log(ast);
-  const render = generate(ast);
-  console.log(render);
-  
+  // 生成渲染函数
+  const code = generate(ast);
+
+  const renderFn = new Function(`with(this) {return ${code}}`);
+
+  return renderFn;
 }

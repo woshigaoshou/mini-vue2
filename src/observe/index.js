@@ -1,10 +1,9 @@
-import { arrayMethods } from './array'
-
+import { arrayMethods } from './array';
+import Dep from './dep';
 
 class Observer {
   constructor (data) {
     def(data, '__ob__', this);
-    console.log(data);
     
     if (Array.isArray(data)) {
       data.__proto__ = arrayMethods;
@@ -36,9 +35,14 @@ export function def (target, key, val, enumerable) {
 }
 
 export function defineReactive (obj, key, val) {
+  let dep = new Dep();
   Object.defineProperty(obj, key, {
     get () {
       console.log('取值了');
+      // 收集依赖
+      if (Dep.target) {
+        dep.depend();
+      }
       observe(val);
       
       return val;
@@ -47,6 +51,8 @@ export function defineReactive (obj, key, val) {
       console.log('赋值了', newVal);
       observe(val);
       val = newVal;
+      // 通知依赖，调用watcher.update
+      dep.notify();
     }
   })
 }

@@ -1,5 +1,6 @@
 import { initState } from "./state"
 import { complieToFunctions } from './complier/index.js';
+import { mountComponent } from './liftcycle';
 
 export function initMixin (Vue) {
   Vue.prototype._init = function (options) {
@@ -32,5 +33,7 @@ export function initMixin (Vue) {
         options.render = render;
       }
     }
+
+    return mountComponent(this, el);
   }
 }
