@@ -21,7 +21,7 @@ function createElm (vnode) {
 
   if (typeof tag === 'string') {
     vnode.el = document.createElement(tag);
-    console.log(tag);
+    // console.log(tag);
     
     updateProperties(vnode);
     children.forEach(child => {
@@ -30,7 +30,7 @@ function createElm (vnode) {
   } else {
     vnode.el = document.createTextNode(text);
   }
-  console.log(vnode);
+  // console.log(vnode);
   
   return vnode.el;
 }

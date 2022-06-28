@@ -1,13 +1,14 @@
 import { createElement, createTextNode } from './vdom/index';
+import { nextTick } from './util/next-tick';
 
 export function renderMixin (Vue) {
   Vue.prototype._render = function () {
-    console.log('_render');
+    // console.log('_render');
     const vm = this;
-    console.log(vm);
+    // console.log(vm);
     
     const { render } = vm.$options;
-    console.log(render);
+    // console.log(render);
     
     const vnode = render.call(vm);
     return vnode;
@@ -24,4 +25,5 @@ export function renderMixin (Vue) {
       ? '' : typeof val === 'object'
         ? JSON.stringify(val) : val;
   }
+  Vue.prototype.$nextTick = nextTick;
 }

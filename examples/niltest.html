@@ -25,9 +25,15 @@
         };
       }
     });
+
+    vm.$nextTick(() => {
+      vm.a = 5
+    });
     // 需要实现nextTick，否则两次修改会导致重复渲染
-    vm.a = 2;
-    vm.a = 3;
+    setTimeout(() => {
+      vm.a = 2;
+      vm.a = 3;
+    }, 1000);
     // console.log(vm, vm.a);
     // console.log(vm, vm.b.c);
     // vm.b.c = 4;

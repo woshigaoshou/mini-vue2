@@ -38,7 +38,7 @@ export function defineReactive (obj, key, val) {
   let dep = new Dep();
   Object.defineProperty(obj, key, {
     get () {
-      console.log('取值了');
+      // console.log('取值了');
       // 收集依赖
       if (Dep.target) {
         dep.depend();
@@ -48,7 +48,7 @@ export function defineReactive (obj, key, val) {
       return val;
     },
     set (newVal) {
-      console.log('赋值了', newVal);
+      // console.log('赋值了', newVal);
       observe(val);
       val = newVal;
       // 通知依赖，调用watcher.update

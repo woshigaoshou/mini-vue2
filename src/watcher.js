@@ -1,4 +1,5 @@
 import Dep from './observe/dep';
+import { queueWatcher } from './observe/scheduler';
 
 let id = 0;
 
@@ -31,6 +32,9 @@ export default class Watcher {
     }
   }
   update () {
+    queueWatcher(this);
+  }
+  run () {
     // 重新渲染，重新收集依赖
     this.get();
   }

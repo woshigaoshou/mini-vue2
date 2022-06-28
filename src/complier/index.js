@@ -34,7 +34,7 @@ function gen (node) {
     const { text } = node;
     // 纯文本
     if (!defaultTagRE.test(text)) {
-      console.log(1);
+      // console.log(1);
       
       // _v 表示创建文本vNode
       return `_v(${JSON.stringify(text)})`;
@@ -69,7 +69,7 @@ function generate (ast) {
 
 export function complieToFunctions (template) {
   let ast = parseHTML(template);
-  console.log(ast);
+  // console.log(ast);
   // 生成渲染函数
   const code = generate(ast);
 

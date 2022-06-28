@@ -85,7 +85,6 @@ export function parseHTML (html) {
   }
 
 
-  let i = 10;
   while (html) {
     const textEnd = html.indexOf('<');
 
