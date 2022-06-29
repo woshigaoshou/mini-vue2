@@ -4,11 +4,11 @@ let waiting = false;
 let timerFunc;
 
 function flushCallbacks () {
-  debugger
-  console.log(callbacks);
-  callbacks.forEach(cb => cb());
-  callbacks = [];
+  // 需要先置为false，否则cb内触发了渲染，渲染的watcher.run不会进入到队列中
   waiting = false;
+  const copies = callbacks.slice(0);
+  callbacks.length = 0;
+  copies.forEach(cb => cb());
 }
 
 if (typeof Promise !== undefined) {
