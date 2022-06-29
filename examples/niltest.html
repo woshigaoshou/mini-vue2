@@ -13,8 +13,23 @@
   </div>
   <script src="../dist/vue.js"></script>
   <script>
+    Vue.mixin({
+      created () {
+        console.log('mixin-created');
+      },
+      data: {
+        a: 2,
+        b: 3
+      }
+    })
     const vm = new Vue({
       el: '#app',
+      mixins: [{
+        created() {
+          console.log(1);
+          
+        }
+      }],
       data () {
         return {
           a: 1,
@@ -25,15 +40,17 @@
         };
       }
     });
+    console.log(vm);
+    
 
-    vm.$nextTick(() => {
-      vm.a = 5
-    });
-    // 需要实现nextTick，否则两次修改会导致重复渲染
-    setTimeout(() => {
-      vm.a = 2;
-      vm.a = 3;
-    }, 1000);
+    // vm.$nextTick(() => {
+    //   vm.a = 5
+    // });
+    // // 需要实现nextTick，否则两次修改会导致重复渲染
+    // setTimeout(() => {
+    //   vm.a = 2;
+    //   vm.a = 3;
+    // }, 1000);
     // console.log(vm, vm.a);
     // console.log(vm, vm.b.c);
     // vm.b.c = 4;

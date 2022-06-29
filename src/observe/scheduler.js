@@ -6,7 +6,6 @@ let pending = false;
 
 // 利用队列，放到nextTick里，避免多次同步赋值时重复触发渲染
 function flushSchedulerQueue () {
-  debugger
   queue.forEach(wathcer => wathcer.run());
   pending = false;
   has = {};
@@ -20,7 +19,6 @@ export function queueWatcher (watcher) {
     queue.push(watcher);
     if (!pending) {
       pending = true;
-      debugger
       nextTick(flushSchedulerQueue);
     }
   }

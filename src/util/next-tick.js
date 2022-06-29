@@ -39,7 +39,7 @@ if (typeof Promise !== undefined) {
 }
 
 export function nextTick (cb) {
-  console.log(cb);
+  // console.log(cb);
   callbacks.push(cb);
   if (!waiting) {
     waiting = true;

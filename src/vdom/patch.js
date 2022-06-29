@@ -1,9 +1,9 @@
 export function patch (oldVnode, vnode) {
-  console.log(oldVnode);
+  // console.log(oldVnode);
   // 初次渲染时，传入的是真实dom，dom节点是具有nodeType属性的
   const isRealElement = oldVnode.nodeType;
   if (isRealElement) {
-    console.log(isRealElement);
+    // console.log(isRealElement);
     const oldElm = oldVnode;
     const parentElm = oldVnode.parentNode;
     let el = createElm(vnode);
