@@ -25,14 +25,18 @@
     const vm = new Vue({
       el: '#app',
       mixins: [{
+        data () {
+          return {
+            a: 22
+          }
+        },
         created() {
           console.log(1);
-          
         }
       }],
       data () {
         return {
-          a: 1,
+          // a: 1,
           b: {
             c: 3
           },
