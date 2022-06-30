@@ -49,6 +49,7 @@ strats.data = function (parentVal, childVal, vm) {
   )
 }
 
+// 这里的逻辑和默认合并策略一样，childVal会直接覆盖parentVal的值
 function mergeData (to = {}, from) {
   if (!from) return to;
   const keys = Object.keys(from);
@@ -74,8 +75,6 @@ export function mergeOptions (parent, child, vm) {
   // 所以最终组件权重 > 组件内mixins(由于是for循环向前遍历，多个mixins，越靠后权重越高) > mixins内的mixins > 全局mixin > 全局mixin嵌套的mixin
   if (child.mixins) {
     for (let i = 0; i < child.mixins.length; i++) {
-      console.log('aaa',  child.mixins[i]);
-      
       parent = mergeOptions(parent, child.mixins[i]);
     }
   }

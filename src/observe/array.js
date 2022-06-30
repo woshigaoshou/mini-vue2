@@ -30,5 +30,7 @@ methods.forEach(method => {
     console.log(method);
     
     if (inserted) ob.observeArray(inserted);
+    
+    ob.dep.notify();  // 通过Observer实例上的dep实例通知依赖，这样就不用取到上一层如：obj[key]: value， 可直接取value而不用obj[key]的方式通知了
   }
 });
