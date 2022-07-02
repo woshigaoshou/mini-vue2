@@ -7,43 +7,64 @@
 </head>
 <body>
   <div id="app">
-    <span>13--- {{a}} ---123</span>
-    <p>{{b}}</p>
-    <a href="#"><i>1123</i></a>
+    {{sum}}
   </div>
   <script src="../dist/vue.js"></script>
   <script>
-    Vue.mixin({
-      created () {
-        console.log('mixin-created');
-      },
-      data: {
-        a: 2,
-        b: 3
-      }
-    })
+    // Vue.mixin({
+    //   created () {
+    //     console.log('mixin-created');
+    //   },
+    //   data: {
+    //     a: 2,
+    //     b: 3
+    //   }
+    // })
     const vm = new Vue({
       el: '#app',
-      mixins: [{
-        data () {
-          return {
-            a: 22
-          }
-        },
-        created() {
-          console.log(1);
-        }
-      }],
+      // mixins: [{
+      //   data () {
+      //     return {
+      //       a: 22
+      //     }
+      //   },
+      //   created() {
+      //     console.log(1);
+      //   }
+      // }],
       data () {
         return {
-          // a: 1,
+          a: 1,
           b: {
-            c: 3
+            c: 3,
+            e: {
+              f: []
+            }
           },
-          d: []
+          d: [],
         };
+      },
+      computed: {
+        sum () {
+          return this.b.c + this.a;
+        }
+      },
+      watch: {
+        sum (newValue, oldValue) {
+          console.log(newValue, oldValue);
+          
+        }
       }
     });
+    // debugger
+    // vm.d.push = [123];
+    // vm.b.e.f.push(1)
+    // 依赖的属性dep收集了computedWatcher  同样 computedWatcher也收集了dep，因此调用depend时，会使用this.deps.depend，让依赖属性去收集当前的视图，计算属性本身是不收集依赖的
+    // debugger
+    // vm.b.e.f = 5
+    setTimeout(() => {
+      vm.a = 2;
+    }, 1000)
     console.log(vm);
     
 

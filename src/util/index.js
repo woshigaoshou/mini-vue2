@@ -4,3 +4,7 @@ export function extend (to, _from) {
   }
   return to;
 }
+
+export function isObject (obj) {
+  return obj !== null && typeof obj === 'object';
+}

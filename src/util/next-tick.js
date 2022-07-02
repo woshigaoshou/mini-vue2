@@ -11,6 +11,7 @@ function flushCallbacks () {
   copies.forEach(cb => cb());
 }
 
+// 采用优雅降级的方式
 if (typeof Promise !== undefined) {
   const p = Promise.resolve();
   timerFunc = () => {

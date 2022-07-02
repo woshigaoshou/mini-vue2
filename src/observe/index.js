@@ -50,11 +50,12 @@ export function defineReactive (obj, key, val) {
   // 这里的observe不放在get里面是因为：只需要取一次，若改变了，在set里面重新赋值即可
   let childOb = observe(val);
   let dep = new Dep();
-  console.log(val, key);
+  // console.log(val, key);
   Object.defineProperty(obj, key, {
     get () {
       // console.log('取值了');
       // 收集依赖
+      
       if (Dep.target) {
         // 收集属性的依赖
         dep.depend();

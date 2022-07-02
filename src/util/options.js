@@ -1,4 +1,4 @@
-import { extend } from './util';
+import { extend } from './index';
 
 const strats = {};
 const LIFTCYCLE_HOOKS = [
@@ -41,7 +41,7 @@ function mergeHook (parentVal, childVal) {
 }
 
 strats.data = function (parentVal, childVal, vm) {
-  console.log(parentVal, childVal);
+  // console.log(parentVal, childVal);
   
   return mergeData(
     typeof parentVal === 'function' ? parentVal.call(vm || this) : parentVal,
@@ -55,7 +55,7 @@ function mergeData (to = {}, from) {
   const keys = Object.keys(from);
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
-    console.log(key, to, from);
+    // console.log(key, to, from);
     
     to[key] = from[key];
   }
@@ -67,7 +67,7 @@ const defaultStrat = function (parentVal, childVal) {
 }
 
 export function mergeOptions (parent, child, vm) {
-  console.log(parent, child);
+  // console.log(parent, child);
   
   // parent优先级大于child
   const options = {};

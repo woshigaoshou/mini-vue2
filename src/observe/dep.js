@@ -19,4 +19,16 @@ export default class Dep {
   }
 }
 
+const targetStack  = [];
 Dep.target = null;
+
+// 当渲染watcher执行取值计算属性时，需要先保存渲染watcher，挂载computedWatcher，让依赖属性收集该commputedWatcher
+export function pushTarget (watcher) {
+  targetStack.push(watcher);
+  Dep.target = watcher;
+}
+
+export function popTarget () {
+  targetStack.pop();
+  Dep.target = targetStack[targetStack.length - 1];
+}
