@@ -82,7 +82,7 @@ export default class Watcher {
       }
     } else {
        // 重新渲染，重新收集依赖
-      this.cb.call(this.vm);
+      this.get();
     }
   }
 }
