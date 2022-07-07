@@ -1,41 +1,45 @@
 export function patch (oldVnode, vnode) {
   // console.log(oldVnode);
-  // 初次渲染时，传入的是真实dom，dom节点是具有nodeType属性的
-  const isRealElement = oldVnode.nodeType;
-  if (isRealElement) {
-    // console.log(isRealElement);
-    const oldElm = oldVnode;
-    const parentElm = oldVnode.parentNode;
-    let el = createElm(vnode);
-    parentElm.insertBefore(el, oldElm.nextSibling);
-    parentElm.removeChild(oldElm);
-    return el;
+  if (!oldVnode) {
+    return createElm(vnode);
   } else {
-    // 不同标签，直接替换
-    if (oldVnode.tag !== vnode.tag) {
-      return oldVnode.el.parentNode.replaceChild(createElm(vnode), oldVnode.el);;
-    }
-
-    // 这里是相同标签，且无tag，证明两个都是文本
-    if (!oldVnode.tag) {
-      if (oldVnode.text !== vnode.text) {
-        oldVnode.el.textContent = vnode.text;
+    // 初次渲染时，传入的是真实dom，dom节点是具有nodeType属性的
+    const isRealElement = oldVnode.nodeType;
+    if (isRealElement) {
+      // console.log(isRealElement);
+      const oldElm = oldVnode;
+      const parentElm = oldVnode.parentNode;
+      let el = createElm(vnode);
+      parentElm.insertBefore(el, oldElm.nextSibling);
+      parentElm.removeChild(oldElm);
+      return el;
+    } else {
+      // 不同标签，直接替换
+      if (oldVnode.tag !== vnode.tag) {
+        return oldVnode.el.parentNode.replaceChild(createElm(vnode), oldVnode.el);;
       }
-    }
 
-    // 节点复用
-    const el = vnode.el = oldVnode.el;
-    updateProperties(vnode, oldVnode.data);
-    const oldChild = oldVnode.children || [];
-    const newChild = vnode.children || [];
+      // 这里是相同标签，且无tag，证明两个都是文本
+      if (!oldVnode.tag) {
+        if (oldVnode.text !== vnode.text) {
+          oldVnode.el.textContent = vnode.text;
+        }
+      }
 
-    if (oldChild.length > 0 && newChild.length > 0) {
-      updateChildren(el, oldChild, newChild);
-    } else if (oldChild.length > 0) {
-      el.innerHTML = '';
-    } else if (newChild.length > 0) {
-      for(let i = 0; i < newChild.length; i++) {
-        el.appendChild(createElm(newChild[i]));
+      // 节点复用
+      const el = vnode.el = oldVnode.el;
+      updateProperties(vnode, oldVnode.data);
+      const oldChild = oldVnode.children || [];
+      const newChild = vnode.children || [];
+
+      if (oldChild.length > 0 && newChild.length > 0) {
+        updateChildren(el, oldChild, newChild);
+      } else if (oldChild.length > 0) {
+        el.innerHTML = '';
+      } else if (newChild.length > 0) {
+        for(let i = 0; i < newChild.length; i++) {
+          el.appendChild(createElm(newChild[i]));
+        }
       }
     }
   }
@@ -149,11 +153,22 @@ function updateChildren (el, oldChild, newChild) {
   }
 }
 
+function createComponent (vnode) {
+  let i = vnode.data;
+  if ((i = i.hook) && (i = i.init)) {
+    i(vnode);
+  }
+  if (vnode.componentInstance) return true;
+}
+
 // 创建真实DOM
 export function createElm (vnode) {
   const { tag, data, key, children, text } = vnode;
 
   if (typeof tag === 'string') {
+    if (createComponent(vnode)) {
+      return vnode.componentInstance.$el; // 组件实例的$el
+    }
     vnode.el = document.createElement(tag);
     // console.log(tag);
     

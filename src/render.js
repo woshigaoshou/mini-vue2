@@ -15,7 +15,7 @@ export function renderMixin (Vue) {
   }
   Vue.prototype._c = function (...args) {
     // 创建虚拟dom
-    return createElement(...args);
+    return createElement(this, ...args);
   }
   Vue.prototype._v = function (text) {
     return createTextNode(text);

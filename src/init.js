@@ -6,7 +6,7 @@ import { mergeOptions } from './util/options';
 export function initMixin (Vue) {
   Vue.prototype._init = function (options) {
     const vm = this;
-    
+
     vm.$options = mergeOptions(vm.constructor.options, options);
     console.log(vm.$options);
     
@@ -23,7 +23,6 @@ export function initMixin (Vue) {
   Vue.prototype.$mount = function (el) {
     const options = this.$options;
     el = document.querySelector(el);
-  
   
     if (!options.render) {
       let template = options.template;

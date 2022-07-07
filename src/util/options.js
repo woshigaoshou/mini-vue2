@@ -16,6 +16,22 @@ LIFTCYCLE_HOOKS.forEach(hook => {
   strats[hook] = mergeHook;
 });
 
+const ASSETS_TYPE = ["component", "directive", "filter"];
+
+function mergeAssets(parentVal, childVal) {
+  const res = Object.create(parentVal);
+  if (childVal) {
+    for (let k in childVal) {
+      res[k] = childVal[k];
+    }
+  }
+  return res;
+}
+
+ASSETS_TYPE.forEach(type => {
+  strats[type + 's'] = mergeAssets;
+});
+
 // 对象类型的option，采用的是extend方式，即先完成parentVal的赋值，之后取childVal的key直接对res[key]进行覆盖
 strats.props =
 strats.methods =
