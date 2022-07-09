@@ -12,3 +12,4 @@
 7. computed计算属性
 8. watch侦听器
 9. diff算法
+10. 组件化原理
