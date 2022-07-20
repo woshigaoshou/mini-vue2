@@ -10,3 +10,4 @@ export default function initAssetRegisters (Vue) {
     }
   })
 }
+// todo 思维导图（组件化）   剩余原理学习  周末完成   下周vuex vue-router原理  复习vue原理

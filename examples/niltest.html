@@ -11,33 +11,57 @@
   <script src="../dist/vue.js"></script>
   <script>
     
-  // 全局组件
-  Vue.component("parent-component", {
-    template: `<div>我是全局组件</div>`,
-  });
-  // Vue实例化
-  let vm = new Vue({
-    el: "#app",
-    data() {
-      return {
-        aa: 1,
-      };
-    },
-    // render(h) {
-    //   return h('div',{id:'a'},'hello')
-    // },
-    template: `<div id="a">
-      hello 这是我自己写的Vue{{aa}}
-      <parent-component></parent-component>
-      <child-component></child-component>
-      </div>`,
-    // 局部组件
-    components: {
-      "child-component": {
-        template: `<div>我是局部组件</div>`,
+
+    const vm = new Vue({
+      el: "#app",
+      data() {
+        return {
+          aa: 1,
+          bb: 2,
+        };
       },
-    },
-  });
+    });
+    vm.$watch(() => {
+      console.log(vm.aa);
+      console.log(vm.bb);
+    }, (val) => {
+      console.log(val);
+      
+    })
+    setTimeout(() => {
+      vm.aa= 2;
+    }, 1000)
+    setTimeout(() => {
+      vm.bb = 3;
+    }, 3000)
+
+  // 全局组件
+  // Vue.component("parent-component", {
+  //   template: `<div>我是全局组件</div>`,
+  // });
+  // // Vue实例化
+  // let vm = new Vue({
+  //   el: "#app",
+  //   data() {
+  //     return {
+  //       aa: 1,
+  //     };
+  //   },
+  //   // render(h) {
+  //   //   return h('div',{id:'a'},'hello')
+  //   // },
+  //   template: `<div id="a">
+  //     hello 这是我自己写的Vue{{aa}}
+  //     <parent-component></parent-component>
+  //     <child-component></child-component>
+  //     </div>`,
+  //   // 局部组件
+  //   components: {
+  //     "child-component": {
+  //       template: `<div>我是局部组件</div>`,
+  //     },
+  //   },
+  // });
 
     // Vue.mixin({
     //   created () {
